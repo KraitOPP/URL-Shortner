@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - URL Shortner</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <h2>URL Shortener</h2>
+    <% if (locals.shortenID) { %>
+        <div class="url-generated">
+            <h3>Url Shorten Successful</h3>
+            <p>Your Shorten URL - <a target="_blank" href="http://localhost:8000/url/<%= shortenID %>">http://localhost:8000/url/<%= shortenID %></a></p>
+        </div>
+    <% } %>
+    <div class="generate-id">
+        <form method="POST" action="/url">
+            <div>
+                <input type="text" name="url" placeholder="Enter Your Link to Shorten">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <% if (locals.urls) { %>
+        <div class="url-history">
+            <h2>Previously Shorten URL's</h2>
+            <table>
+                <tr>
+                    <th>S No.</th>
+                    <th>Shorten URL</th>
+                    <th>Redirect URL</th>
+                    <th>Total Visits</th>
+                </tr>
+                <% urls.forEach((url,index) => { %>
+                    <tr>
+                        <th><%= index+1 %></th>
+                        <th><a target="_blank" href="http://localhost:8000/url/<%= url.shortID %>">http://localhost:8000/url/<%= url.shortID %></a></th>
+                        <th><a target="_blank" href="<%= url.RedirectedURL %>"><%= url.RedirectedURL %></a></th>
+                        <th><%= url.VisitedHistory.length %></th>
+                    </tr>
+                <% }) %>
+            </table>
+        </div>
+    <% } %> 
+</body>
+</html>
